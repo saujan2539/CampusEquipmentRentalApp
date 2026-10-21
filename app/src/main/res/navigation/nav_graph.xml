@@ -59,15 +59,15 @@
         <argument
             android:name="applicantName"
             app:argType="string"
-            android:defaultValue="미입력" />
+            android:defaultValue="Not entered" />
         <argument
             android:name="studentId"
             app:argType="string"
-            android:defaultValue="미입력" />
+            android:defaultValue="Not entered" />
         <argument
             android:name="purpose"
             app:argType="string"
-            android:defaultValue="미입력" />
+            android:defaultValue="Not entered" />
         <argument
             android:name="rentalDays"
             app:argType="integer"

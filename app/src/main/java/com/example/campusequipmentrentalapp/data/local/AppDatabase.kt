@@ -15,25 +15,25 @@ import androidx.room.RoomDatabase
 abstract class AppDatabase : RoomDatabase()
 {
     /**
-     * RentalDao 연결 처리
-     * */
-    abstract fun rentalDao(): RentalDao
+         * Handles RentalDao connection
+         * */
+        abstract fun rentalDao(): RentalDao
 
-    /**
-     * UserDao 연결 처리
-     * */
-    abstract fun userDao(): UserDao
+        /**
+         * Handles UserDao connection
+         * */
+        abstract fun userDao(): UserDao
 
-    /**
-     * EquipmentDao 연결 처리
-     * */
-    abstract fun equipmentDao(): EquipmentDao
+        /**
+         * Handles EquipmentDao connection
+         * */
+        abstract fun equipmentDao(): EquipmentDao
 
 
-    companion object {
-        private var instance: AppDatabase? = null
+        companion object {
+            private var instance: AppDatabase? = null
 
-        /** 앱 전체에서 같은 DB 를 사용 */
+            /** Uses the same DB across the whole app */
         fun getDatabase(context: Context): AppDatabase {
             return instance ?: synchronized(this) {
                 val _instance = Room.databaseBuilder(

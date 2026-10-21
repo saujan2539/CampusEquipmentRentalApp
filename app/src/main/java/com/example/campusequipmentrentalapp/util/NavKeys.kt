@@ -1,7 +1,7 @@
 package com.jeiu.campusequipmentrental.util
 
 /**
- * Bundle Key 오타를 줄이기 위해 한 곳에서 관리합니다.
+ * Manages Bundle keys in one place to reduce typos.
  */
 object NavKeys {
     const val EQUIPMENT_ID = "equipmentId"

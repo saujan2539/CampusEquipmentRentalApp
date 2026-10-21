@@ -11,8 +11,8 @@ data class User (
 
 enum class UserRole( val label:String){
 
-     STUDENT("학생"),
-     PROFESSOR("교수"),
-     ASSISTANT("조교")
+     STUDENT("Student"),
+          PROFESSOR("Professor"),
+          ASSISTANT("Assistant")
 
 }

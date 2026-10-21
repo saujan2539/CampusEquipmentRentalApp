@@ -9,28 +9,28 @@ class UserRepository {
 
         User(1,
             "20260010",
-            "김민수",
-            "컴퓨터소프트웨어학과",
+            "Minsoo Kim",
+            "Computer Software Department",
             UserRole.STUDENT),
 
         User(2,"prof01",
-            "박교수",
-            "컴퓨터소프트웨어학과",
+            "Prof. Park",
+            "Computer Software Department",
             UserRole.PROFESSOR),
 
         User(3, "assist01",
-            "이조교",
-            "컴퓨터소프트웨어학과",
+            "Assistant Lee",
+            "Computer Software Department",
             UserRole.ASSISTANT),
 
         User(4,
             "20260011",
-            "홍길동",
-            "컴퓨터소프트웨어학과",
+            "Gildong Hong",
+            "Computer Software Department",
             UserRole.STUDENT)
 
     )
 
-    fun findByLoginId(id:String) : User ?= userList.find{ user -> user.loginId == id}
+    fun findByLoginId(id:String) : User ?= userList.find{ user -> user.userId == id}
 
 }

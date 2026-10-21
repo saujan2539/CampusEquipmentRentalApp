@@ -7,15 +7,15 @@ import androidx.room.Query
 @Dao
 interface UserDao {
 
-    /** 사용자 추가 */
-    @Insert
-    suspend fun insertUser(userEntity: UserEntity): Long
+    /** Add a user */
+        @Insert
+        suspend fun insertUser(userEntity: UserEntity): Long
 
-    /** 모든 사용자 조회 */
-    @Query("SELECT * FROM users ORDER BY id DESC")
-    suspend fun getUsersAll(): List<UserEntity>
+        /** Get all users */
+        @Query("SELECT * FROM users ORDER BY id DESC")
+        suspend fun getUsersAll(): List<UserEntity>
 
-    /** 사용자 아이디로 사용자 조회 */
+        /** Find user by user ID */
     @Query("SELECT * FROM users WHERE userId = :userId LIMIT 1")
     suspend fun getUserId(userId: String): UserEntity?
 }

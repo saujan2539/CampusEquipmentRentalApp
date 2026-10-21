@@ -50,7 +50,7 @@ class RentalFragment : Fragment(R.layout.fragment_rental) {
         if(currentUser == null){
             Toast.makeText(
                 requireContext(),
-                "로그인 사용자 정보가 없습니다.",
+                "No logged-in user information.",
                 Toast.LENGTH_SHORT
             ).show()
         }
@@ -65,10 +65,10 @@ class RentalFragment : Fragment(R.layout.fragment_rental) {
             return
         }
         binding.tvRentalUser.text = """
-            |                         신청자: ${currentUser?.name} 
-            |  |                      사용자 ID: ${currentUser?.userId}
-            |                         구분 : ${currentUser?.role}
-            |                         학과 : ${currentUser?.department}
+            |                         Applicant: ${currentUser?.name} 
+                        |  |                      User ID: ${currentUser?.userId}
+                        |                         Role: ${currentUser?.role}
+                        |                         Department: ${currentUser?.department}
             |                       """.trimMargin()
         binding.tvSelectedEquipment.text = getString(
             R.string.selected_equipment_format,
@@ -125,7 +125,7 @@ class RentalFragment : Fragment(R.layout.fragment_rental) {
                 userId = currentUser?.userId?:"",
                 rentalDays = rentalDays,
                 purpose = purpose,
-                status = "대여중"
+                status = "Rented"
             )
 
            //  val resultNum = rentalDao.insert(rentalEntity)
@@ -141,7 +141,7 @@ class RentalFragment : Fragment(R.layout.fragment_rental) {
 
                     Toast.makeText(
                         requireContext(),
-                        "DB 저장 완료 : 신청번호 $resultNum",
+                        "Saved to DB: Request No. $resultNum",
                         Toast.LENGTH_SHORT
                     ).show()
                     val bundle = Bundle().apply {

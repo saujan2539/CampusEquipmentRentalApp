@@ -7,19 +7,19 @@ object  UserSession {
     var currentUser : User? = null
         private set
 
-    /** 로그린 **/
-    fun login(user: User) {
+    /** Login **/
+        fun login(user: User) {
 
-        currentUser = user
-    }
+            currentUser = user
+        }
 
-    /** 로그아웃 **/
-    fun logout() {
+        /** Logout **/
+        fun logout() {
 
-        currentUser = null
-    }
+            currentUser = null
+        }
 
-    /** 로그인 상태 확인 **/
+        /** Check login status **/
    //   val isLoggedIn1: Boolean
    //     get() = currentUser != null
 

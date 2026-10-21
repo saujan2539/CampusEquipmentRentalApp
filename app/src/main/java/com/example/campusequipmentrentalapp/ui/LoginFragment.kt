@@ -42,7 +42,7 @@ class LoginFragment :
             .setOnClickListener {
 
 
-                // 입력한 ID
+                // Entered ID
                 val loginId =
                     binding.etLoginId
                         .text
@@ -50,11 +50,11 @@ class LoginFragment :
                         .trim()
 
 
-                // 빈 값 검사
+                // Check for empty value
                 if (loginId.isEmpty()) {
 
                     binding.etLoginId.error =
-                        "사용자 ID를 입력하세요."
+                        "Please enter your user ID."
 
                     binding.etLoginId
                         .requestFocus()
@@ -63,16 +63,16 @@ class LoginFragment :
                 }
 
 
-                // 사용자 검색
+                // Find user
                 val user = UserRepository().findByLoginId(loginId)
 
 
-                // 등록되지 않은 사용자
+                // Unregistered user
                 if (user == null) {
 
                     Toast.makeText(
                         requireContext(),
-                        "등록되지 않은 사용자입니다.",
+                        "Unregistered user.",
                         Toast.LENGTH_SHORT
                     ).show()
 
@@ -80,7 +80,7 @@ class LoginFragment :
                 }
 
 
-                // 로그인 성공
+                // Login success
                 UserSession.login(
                     user
                 )
@@ -88,12 +88,12 @@ class LoginFragment :
 
                 Toast.makeText(
                     requireContext(),
-                    "${user.name}님 로그인 성공",
+                    "${user.name}, login successful",
                     Toast.LENGTH_SHORT
                 ).show()
 
 
-                // Home으로 이동
+                // Navigate to Home
                 findNavController()
                     .navigate(
                         R.id
