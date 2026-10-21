@@ -5,7 +5,13 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import androidx.navigation.fragment.findNavController
 import com.example.campusequipmentrentalapp.R
+import com.example.campusequipmentrentalapp.data.EquipmentRepository
+import com.example.campusequipmentrentalapp.databinding.FragmentEquipmentDetailBinding
+import com.example.campusequipmentrentalapp.model.RentalStatus
+import com.jeiu.campusequipmentrental.util.NavKeys
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -17,44 +23,80 @@ private const val ARG_PARAM2 = "param2"
  * Use the [EquipmentDetailFragment.newInstance] factory method to
  * create an instance of this fragment.
  */
-class EquipmentDetailFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
+class EquipmentDetailFragment : Fragment(R.layout.fragment_equipment_detail) {
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
+    private var _binding: FragmentEquipmentDetailBinding? = null
+    private val binding: FragmentEquipmentDetailBinding
+        get() = _binding!!
+
+    override fun onViewCreated(
+        view: View,
+        savedInstanceState: Bundle?
+    ) {
+        super.onViewCreated(view, savedInstanceState)
+
+        _binding = FragmentEquipmentDetailBinding.bind(view)
+
+        val equipmentId = arguments?.getInt(NavKeys.EQUIPMENT_ID, -1) ?: -1
+        val equipment = EquipmentRepository.findById(equipmentId)
+
+        if (equipment == null) {
+            Toast.makeText(
+                requireContext(),
+                getString(R.string.equipment_not_found),
+                Toast.LENGTH_SHORT
+            ).show()
+            findNavController().popBackStack()
+            return
+        }
+
+        binding.tvDetailIcon.text = equipment.icon
+        binding.tvDetailName.text = equipment.name
+        binding.tvDetailCategory.text = equipment.category
+        binding.tvDetailStatus.text = equipment.status.label
+        binding.tvDetailStatus.setBackgroundResource(
+            when (equipment.status) {
+                RentalStatus.AVAILABLE -> R.drawable.bg_status_available
+                RentalStatus.RENTED -> R.drawable.bg_status_unavailable
+                RentalStatus.MAINTENANCE -> R.drawable.bg_status_maintenance
+            }
+        )
+        binding.tvDetailDescription.text = equipment.description
+        binding.tvDetailLocation.text = getString(
+            R.string.location_format,
+            equipment.location
+        )
+        binding.tvDetailMaxDays.text = getString(
+            R.string.max_days_format,
+            equipment.maxRentalDays
+        )
+
+        binding.btnRentEquipment.isEnabled = equipment.status.isAvailable
+        binding.btnRentEquipment.text = if (equipment.status.isAvailable) {
+            getString(R.string.apply_rental)
+        } else {
+            getString(R.string.currently_unavailable)
+        }
+
+        binding.btnRentEquipment.setOnClickListener {
+            val bundle = Bundle().apply {
+                putInt(NavKeys.EQUIPMENT_ID, equipment.id)
+            }
+
+            findNavController().navigate(
+                R.id.action_equipmentDetailFragment_to_rentalFragment,
+                bundle
+            )
+        }
+
+
+        binding.btnBackDetail.setOnClickListener {
+            findNavController().popBackStack()
         }
     }
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_equipment_detail, container, false)
-    }
-
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment EquipmentDetailFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            EquipmentDetailFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
-            }
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 }
